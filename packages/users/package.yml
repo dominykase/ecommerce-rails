@@ -1,0 +1,4 @@
+# packages/users/package.yml
+enforce_dependencies: true
+dependencies:
+  - .
