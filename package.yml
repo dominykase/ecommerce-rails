@@ -7,5 +7,5 @@ enforce_dependencies: false
 
 # A list of this package's dependencies
 # Note that packages in this list require their own `package.yml` file
-# dependencies:
-# - "packages/billing"
+dependencies:
+ - "packages/users"
