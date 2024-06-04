@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  load Rails.root.join('packages/users/config/routes/users.rb')
+  load Rails.root.join('components/users/config/routes/users.rb')
 
   # draw(:users)
 
