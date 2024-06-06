@@ -1,6 +1,6 @@
 # fronzen_string_literal: true
 
-class Api::UsersController < ApplicationController
+class UsersController < ApplicationController
   protect_from_forgery with: :null_session
 
   def create
@@ -8,7 +8,7 @@ class Api::UsersController < ApplicationController
 
     User.create!(
       login: user_params[:login],
-      password: user_params[:password],
+      password: user_params[:password]
     )
   end
 
