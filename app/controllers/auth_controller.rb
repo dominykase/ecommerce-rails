@@ -1,19 +1,21 @@
 class AuthController < ApplicationController
+  protect_from_forgery with: :null_session
+
   def login
-    user = User.find_by_email(params[:email])
+    user = User.find_by_login(params[:login])
 
     if user && user.authenticate(params[:password])
       token = JWT.encode(
         {
           user_id: user.id,
-          exp: Time.current + 1.day
+          exp: (Time.current + 1.day).to_i
         },
-        Rails.application.secrets.secret_key_base
+        ENV['JWT_SECRET']
       )
 
-      render json: { token: token }
+      return render json: { token: token }
     end
 
-    render json: { message: 'Invalid email or password' }, status: :unauthorized
+    return render json: { message: 'Invalid email or password' }, status: :unauthorized
   end
 end
