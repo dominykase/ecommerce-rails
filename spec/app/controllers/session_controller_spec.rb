@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-RSpec.describe 'SessionController' do
-  describe '#login' do
-    subject { post :login, params: { user: user, password: password } }
+require 'rails_helper'
 
-    let(:user) { User.create!(login: 'test', password: 'test') }
-    let(:password) { 'test' }
+RSpec.describe SessionController, type: :controller do
+  describe '#login' do
+    subject { post :login, params: { login: user.login, password: password } }
+
+    let(:user) { User.create!(login: 'test', password: password) }
+    let(:password) { 'labas1234!' }
 
     # before do
     #   allow(ActionController::Parameters).to receive(:new)
@@ -14,7 +16,9 @@ RSpec.describe 'SessionController' do
 
     context 'when calling the endpoint' do
       it 'hits the domain class' do
-        expect('::Session::Login').to receive(:handle).with(user.login, password)
+        domain = Session::Login.new(user.login, password)
+        allow(Session::Login).to receive(:new).and_return(domain)
+        expect(domain).to receive(:handle).once
 
         expect(subject).to have_http_status(:ok)
       end
